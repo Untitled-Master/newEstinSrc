@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ESTIN Source - Comprehensive educational resources across different domains">
+    <title>ESTIN Source | Educational Resources Hub</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Previous styles remain the same */
+        :root {
+            --primary-color: #00ff88;
+            --primary-dark: #00cc6a;
+            --secondary-color: #1a1a1a;
+            --accent-color: #333;
+            --text-color: #ffffff;
+            --text-secondary: #cccccc;
+            --hover-color: #2a2a2a;
+            --shadow-color: rgba(0, 255, 136, 0.1);
+            --card-bg: #232323;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            padding: 8px;
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        .hero {
+            position: relative;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            padding: 6rem 2rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-title span {
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .hero-title span::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.5s ease;
+        }
+
+        .hero-title:hover span::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-container {
+            margin: 2rem auto;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1.5rem;
+            border: 2px solid transparent;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .menu-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-card.hidden {
+            display: none;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.15);
+        }
+
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .menu-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-header {
+            background: linear-gradient(45deg, #232323, #2c2c2c);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+
+        .menu-card:hover .card-icon {
+            transform: scale(1.1);
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .card-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1.5rem;
+            background: rgba(0, 255, 136, 0.05);
+            margin-top: auto;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .card-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            background: rgba(0, 255, 136, 0.1);
+            transition: var(--transition);
+        }
+
+        .card-link:hover {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+        }
+
+        .card-link i {
+            transition: var(--transition);
+        }
+
+        .card-link:hover i {
+            transform: translateX(5px);
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            display: none;
+        }
+
+        .no-results.visible {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 4rem 1rem;
+            }
+
+            .menu-grid {
+                padding: 1rem;
+                gap: 1.5rem;
+            }
+
+            .card-header {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    
+    <div class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">ESTIN <span>Src</span></h1>
+            <p class="hero-description">
+                Discover and access comprehensive collections of educational resources across different domains
+            </p>
+            <div class="search-container">
+                <input type="search" class="search-input" placeholder="Search resources..." aria-label="Search resources">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+        </div>
+    </div>
+
+    <main id="main-content" class="menu-grid">
+        <p class="no-results">No resources found matching your search.</p>
+        
+        <article class="menu-card" data-search-terms="architecture design patterns system blueprints software development infrastructure">
+            <div class="card-header">
+                <i class="fas fa-archway card-icon" aria-hidden="true"></i>
+                <h2 class="card-title">Archi</h2>
+                <p class="card-description">
+                    Explore comprehensive architecture resources, design patterns, and system blueprints for modern software development
+                </p>
+            </div>
+            <div class="card-stats">
+                <div class="stat">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Resources</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+            </div>
+            <a href="#archi" class="card-link">
+                Access Resources <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
+        </article>
+
+        <article class="menu-card" data-search-terms="mathematical analysis calculus analytical methods mathematics equations derivatives integrals">
+            <div class="card-header">
+                <i class="fas fa-chart-line card-icon" aria-hidden="true"></i>
+                <h2 class="card-title">analysisGraveyard</h2>
+                <p class="card-description">
+                    Deep dive into mathematical analysis, calculus, and analytical methods with practical examples
+                </p>
+            </div>
+            <div class="card-stats">
+                <div class="stat">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Resources</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+            </div>
+            <a href="#analysis" class="card-link">
+                Access Resources <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
+        </article>
+
+        <article class="menu-card" data-search-terms="linear algebra abstract algebra mathematical structures matrices vectors spaces groups rings fields">
+            <div class="card-header">
+                <i class="fas fa-calculator card-icon" aria-hidden="true"></i>
+                <h2 class="card-title">algebraGraveyard</h2>
+                <p class="card-description">
+                    Master linear algebra, abstract algebra, and mathematical structures through comprehensive guides
+                </p>
+            </div>
+            <div class="card-stats">
+                <div class="stat">
+                    <div class="stat-number">180+</div>
+                    <div class="stat-label">Resources</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+            </div>
+            <a href="#algebra" class="card-link">
+                Access Resources <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
+        </article>
+
+        <article class="menu-card" data-search-terms="advanced systems data structures algorithms programming coding computer science optimization performance">
+            <div class="card-header">
+                <i class="fas fa-microchip card-icon" aria-hidden="true"></i>
+                <h2 class="card-title">asdsGraveyard</h2>
+                <p class="card-description">
+                    Learn advanced systems, data structures, and algorithms with practical implementations
+                </p>
+            </div>
+            <div class="card-stats">
+                <div class="stat">
+                    <div class="stat-number">220+</div>
+                    <div class="stat-label">Resources</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+            </div>
+            <a href="#asds" class="card-link">
+                Access Resources <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
+        </article>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('.search-input');
+            const cards = document.querySelectorAll('.menu-card');
+            const noResults = document.querySelector('.no-results');
+
+            searchInput.addEventListener('input', function() {
+                const searchTerm = searchInput.value.toLowerCase();
+                let visibleCards = 0;
+
+                cards.forEach(card => {
+                    const terms = card.dataset.searchTerms.toLowerCase();
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    
+                    if (terms.includes(searchTerm) || title.includes(searchTerm)) {
+                        card.classList.remove('hidden');
+                        visibleCards++;
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+
+                noResults.style.display = visibleCards ? 'none' : 'block';
+            });
+        });
+    </script>
+</body>
+</html>
